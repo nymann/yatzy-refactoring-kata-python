@@ -1,4 +1,4 @@
-from yatzy import Yatzy
+from yatzy_refactoring_kata.yatzy import Yatzy
 
 # These unit tests can be run using the py.test framework
 # available from http://pytest.org/

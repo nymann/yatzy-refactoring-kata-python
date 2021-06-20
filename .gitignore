@@ -7,4 +7,4 @@ __pycache__/
 .eggs/
 coverage.xml
 htmlcov/
-src/gilded_rose.egg-info
+src/yatzy_refactoring_kata.egg-info
