@@ -3,13 +3,13 @@ class Yatzy:
     def __init__(self, *dice):
         self.dice: list[int] = [*dice]
         self.dice.sort(reverse=True)
+        self._uniq = set(self.dice)
 
     def chance(self):
         return sum(self.dice)
 
     def yatzy(self):
-        uniq = set(self.dice)
-        if len(uniq) == 1:
+        if len(self._uniq) == 1:
             return 50
         return 0
 
@@ -56,29 +56,37 @@ class Yatzy:
                 return score
         return 0
 
-    def four_of_a_kind(self):
+    def number_of_kind(self, min_amount: int) -> int:
         for die in self.dice:
-            if self.dice.count(die) >= 4:
-                return die * 4
+            if self.dice.count(die) >= min_amount:
+                return die * min_amount
         return 0
+
+    def four_of_a_kind(self):
+        return self.number_of_kind(4)
 
     def three_of_a_kind(self):
-        for die in self.dice:
-            if self.dice.count(die) >= 3:
-                return die * 3
-        return 0
+        return self.number_of_kind(3)
 
     def smallStraight(self):
-        uniq = set(self.dice)
-        if len(uniq) == 5 and 6 not in uniq:
-            return sum(uniq)
+        if self.is_straight(small=True):
+            return 15
         return 0
 
     def largeStraight(self):
-        uniq = set(self.dice)
-        if len(uniq) == 5 and 1 not in uniq:
-            return sum(uniq)
+        if self.is_straight(small=False):
+            return 20
         return 0
+
+    def is_straight(self, small: bool) -> bool:
+        uniq = len(self._uniq)
+        if uniq == 6:
+            return True
+        if small:
+            return uniq == 5 and 6 not in self.dice
+
+        return uniq == 5 and 1 not in self.dice
+
 
     def fullHouse(self):
         three_of_a_kind = self.three_of_a_kind()
