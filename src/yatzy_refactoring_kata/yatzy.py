@@ -17,17 +17,14 @@ class Yatzy:
                 return 50
         return 0
 
-    @staticmethod
-    def ones(*dice):
-        return sum([die for die in dice if die == 1])
+    def ones(self):
+        return sum([die for die in self.dice if die == 1])
 
-    @staticmethod
-    def twos(*dice):
-        return sum([die for die in dice if die == 2])
+    def twos(self):
+        return sum([die for die in self.dice if die == 2])
 
-    @staticmethod
-    def threes(*dice):
-        return sum([die for die in dice if die == 3])
+    def threes(self):
+        return sum([die for die in self.dice if die == 3])
 
 
     def fours(self):

@@ -20,23 +20,23 @@ def test_yatzy_scores_50():
 
 
 def test_1s():
-    assert Yatzy.ones(1, 2, 3, 4, 5) == 1
-    assert 2 == Yatzy.ones(1, 2, 1, 4, 5)
-    assert 0 == Yatzy.ones(6, 2, 2, 4, 5)
-    assert 4 == Yatzy.ones(1, 2, 1, 1, 1)
-    assert 5 == Yatzy.ones(1, 1, 1, 1, 1)
+    assert Yatzy(1, 2, 3, 4, 5).ones() == 1
+    assert 2 == Yatzy(1, 2, 1, 4, 5).ones()
+    assert 0 == Yatzy(6, 2, 2, 4, 5).ones()
+    assert 4 == Yatzy(1, 2, 1, 1, 1).ones()
+    assert 5 == Yatzy(1, 1, 1, 1, 1).ones()
 
 
 def test_2s():
-    assert 4 == Yatzy.twos(1, 2, 3, 2, 6)
-    assert 10 == Yatzy.twos(2, 2, 2, 2, 2)
-    assert 0 == Yatzy.twos(1, 4, 3, 5, 6)
+    assert 4 == Yatzy(1, 2, 3, 2, 6).twos()
+    assert 10 == Yatzy(2, 2, 2, 2, 2).twos()
+    assert 0 == Yatzy(1, 4, 3, 5, 6).twos()
 
 
 def test_threes():
-    assert 3 == Yatzy.threes(3, 2, 1, 2, 5)
-    assert 6 == Yatzy.threes(1, 2, 3, 2, 3)
-    assert 12 == Yatzy.threes(2, 3, 3, 3, 3)
+    assert 3 == Yatzy(3, 2, 1, 2, 5).threes()
+    assert 6 == Yatzy(1, 2, 3, 2, 3).threes()
+    assert 12 == Yatzy(2, 3, 3, 3, 3).threes()
 
 
 def test_fours_test():
