@@ -1,152 +1,92 @@
 class Yatzy:
 
     def __init__(self, *dice):
-        self.dice = dice
+        self.dice: list[int] = [*dice]
+        self.dice.sort(reverse=True)
 
-    @staticmethod
-    def chance(*dice):
-        return sum(dice)
+    def chance(self):
+        return sum(self.dice)
 
-    @staticmethod
-    def yatzy(dice):
-        counts = [0] * (len(dice) + 1)
-        for die in dice:
-            counts[die - 1] += 1
-        for i in range(len(counts)):
-            if counts[i] == 5:
-                return 50
+    def yatzy(self):
+        uniq = set(self.dice)
+        if len(uniq) == 1:
+            return 50
         return 0
+
+    def _die_count(self, die: int):
+        return self.dice.count(die)
+
+    def _die_score(self, die: int):
+        return self._die_count(die) * die
 
     def ones(self):
-        return sum([die for die in self.dice if die == 1])
+        return self._die_count(1)
 
     def twos(self):
-        return sum([die for die in self.dice if die == 2])
+        return self._die_score(2)
 
     def threes(self):
-        return sum([die for die in self.dice if die == 3])
-
+        return self._die_score(3)
 
     def fours(self):
-        return sum([die for die in self.dice if die == 4])
+        return self._die_score(4)
 
     def fives(self):
-        return sum([die for die in self.dice if die == 5])
+        return self._die_score(5)
 
     def sixes(self):
-        return sum([die for die in self.dice if die == 6])
+        return self._die_score(6)
 
-    @staticmethod
-    def score_pair(d1, d2, d3, d4, d5):
-        counts = [0] * 6
-        counts[d1 - 1] += 1
-        counts[d2 - 1] += 1
-        counts[d3 - 1] += 1
-        counts[d4 - 1] += 1
-        counts[d5 - 1] += 1
-        at = 0
-        for at in range(6):
-            if counts[6 - at - 1] == 2:
-                return (6 - at) * 2
+    def score_pair(self):
+        for die in self.dice:
+            if self.dice.count(die) == 2:
+                return die * 2
         return 0
 
-    @staticmethod
-    def two_pair(d1, d2, d3, d4, d5):
-        counts = [0] * 6
-        counts[d1 - 1] += 1
-        counts[d2 - 1] += 1
-        counts[d3 - 1] += 1
-        counts[d4 - 1] += 1
-        counts[d5 - 1] += 1
-        n = 0
-        score = 0
-        for i in range(6):
-            if counts[6 - i - 1] >= 2:
-                n = n + 1
-                score += 6 - i
-
-        if n == 2:
-            return score * 2
-        else:
-            return 0
-
-    @staticmethod
-    def four_of_a_kind(_1, _2, d3, d4, d5):
-        tallies = [0] * 6
-        tallies[_1 - 1] += 1
-        tallies[_2 - 1] += 1
-        tallies[d3 - 1] += 1
-        tallies[d4 - 1] += 1
-        tallies[d5 - 1] += 1
-        for i in range(6):
-            if tallies[i] >= 4:
-                return (i + 1) * 4
+    def two_pair(self) -> int:
+        score: int = 0
+        pairs_found: int = 0
+        for die in range(6, 0, -1):
+            if self.dice.count(die) == 4:
+                return die * 4
+            if self.dice.count(die) >= 2:
+                pairs_found += 1
+                score += die * 2
+            if pairs_found == 2:
+                return score
         return 0
 
-    @staticmethod
-    def three_of_a_kind(d1, d2, d3, d4, d5):
-        t = [0] * 6
-        t[d1 - 1] += 1
-        t[d2 - 1] += 1
-        t[d3 - 1] += 1
-        t[d4 - 1] += 1
-        t[d5 - 1] += 1
-        for i in range(6):
-            if t[i] >= 3:
-                return (i + 1) * 3
+    def four_of_a_kind(self):
+        for die in self.dice:
+            if self.dice.count(die) >= 4:
+                return die * 4
         return 0
 
-    @staticmethod
-    def smallStraight(d1, d2, d3, d4, d5):
-        tallies = [0] * 6
-        tallies[d1 - 1] += 1
-        tallies[d2 - 1] += 1
-        tallies[d3 - 1] += 1
-        tallies[d4 - 1] += 1
-        tallies[d5 - 1] += 1
-        if tallies[0] == 1 and tallies[1] == 1 and tallies[2] == 1 and tallies[3] == 1 and tallies[4] == 1:
-            return 15
+    def three_of_a_kind(self):
+        for die in self.dice:
+            if self.dice.count(die) >= 3:
+                return die * 3
         return 0
 
-    @staticmethod
-    def largeStraight(d1, d2, d3, d4, d5):
-        tallies = [0] * 6
-        tallies[d1 - 1] += 1
-        tallies[d2 - 1] += 1
-        tallies[d3 - 1] += 1
-        tallies[d4 - 1] += 1
-        tallies[d5 - 1] += 1
-        if tallies[1] == 1 and tallies[2] == 1 and tallies[3] == 1 and tallies[4] == 1 and tallies[5] == 1:
-            return 20
+    def smallStraight(self):
+        uniq = set(self.dice)
+        if len(uniq) == 5 and 6 not in uniq:
+            return sum(uniq)
         return 0
 
-    @staticmethod
-    def fullHouse(d1, d2, d3, d4, d5):
-        tallies = []
-        _2 = False
-        i = 0
-        _2_at = 0
-        _3 = False
-        _3_at = 0
+    def largeStraight(self):
+        uniq = set(self.dice)
+        if len(uniq) == 5 and 1 not in uniq:
+            return sum(uniq)
+        return 0
 
-        tallies = [0] * 6
-        tallies[d1 - 1] += 1
-        tallies[d2 - 1] += 1
-        tallies[d3 - 1] += 1
-        tallies[d4 - 1] += 1
-        tallies[d5 - 1] += 1
+    def fullHouse(self):
+        three_of_a_kind = self.three_of_a_kind()
+        used_die: int = three_of_a_kind // 3
+        for die in range(6, 0, -1):
+            if die == used_die:
+                continue
+            if self.dice.count(die) >= 2:
+                return three_of_a_kind + die * 2
+        return 0
 
-        for i in range(6):
-            if tallies[i] == 2:
-                _2 = True
-                _2_at = i + 1
-
-        for i in range(6):
-            if tallies[i] == 3:
-                _3 = True
-                _3_at = i + 1
-
-        if _2 and _3:
-            return _2_at * 2 + _3_at * 3
-        else:
-            return 0

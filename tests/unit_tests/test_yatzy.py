@@ -1,22 +1,18 @@
 from yatzy_refactoring_kata.yatzy import Yatzy
 
-# These unit tests can be run using the py.test framework
-# available from http://pytest.org/
-
-
 def test_chance_scores_sum_of_all_dice():
     expected = 15
-    actual = Yatzy.chance(2, 3, 4, 5, 1)
+    actual = Yatzy(2, 3, 4, 5, 1).chance()
     assert expected == actual
-    assert 16 == Yatzy.chance(3, 3, 4, 5, 1)
+    assert 16 == Yatzy(3, 3, 4, 5, 1).chance()
 
 
 def test_yatzy_scores_50():
     expected = 50
-    actual = Yatzy.yatzy([4, 4, 4, 4, 4])
+    actual = Yatzy(4, 4, 4, 4, 4).yatzy()
     assert expected == actual
-    assert 50 == Yatzy.yatzy([6, 6, 6, 6, 6])
-    assert 0 == Yatzy.yatzy([6, 6, 6, 6, 3])
+    assert 50 == Yatzy(6, 6, 6, 6, 6).yatzy()
+    assert 0 == Yatzy(6, 6, 6, 6, 3).yatzy()
 
 
 def test_1s():
@@ -58,44 +54,44 @@ def test_sixes_test():
 
 
 def test_one_pair():
-    assert 6 == Yatzy.score_pair(3, 4, 3, 5, 6)
-    assert 10 == Yatzy.score_pair(5, 3, 3, 3, 5)
-    assert 12 == Yatzy.score_pair(5, 3, 6, 6, 5)
-    assert 0 == Yatzy.score_pair(1, 2, 3, 4, 5)
+    assert 6 == Yatzy(3, 4, 3, 5, 6).score_pair()
+    assert 10 == Yatzy(5, 3, 3, 3, 5).score_pair()
+    assert 12 == Yatzy(5, 3, 6, 6, 5).score_pair()
+    assert 0 == Yatzy(1, 2, 3, 4, 5).score_pair()
 
 
 def test_two_Pair():
-    assert 16 == Yatzy.two_pair(3, 3, 5, 4, 5)
-    assert 18 == Yatzy.two_pair(3, 3, 6, 6, 6)
-    assert 0 == Yatzy.two_pair(3, 3, 6, 5, 4)
+    assert 16 == Yatzy(3, 3, 5, 4, 5).two_pair()
+    assert 18 == Yatzy(3, 3, 6, 6, 6).two_pair()
+    assert 0 == Yatzy(3, 3, 6, 5, 4).two_pair()
 
 
 def test_three_of_a_kind():
-    assert 9 == Yatzy.three_of_a_kind(3, 3, 3, 4, 5)
-    assert 15 == Yatzy.three_of_a_kind(5, 3, 5, 4, 5)
-    assert 9 == Yatzy.three_of_a_kind(3, 3, 3, 3, 5)
-    assert 0 == Yatzy.three_of_a_kind(1, 2, 3, 4, 5)
+    assert 9 == Yatzy(3, 3, 3, 4, 5).three_of_a_kind()
+    assert 15 == Yatzy(5, 3, 5, 4, 5).three_of_a_kind()
+    assert 9 == Yatzy(3, 3, 3, 3, 5).three_of_a_kind()
+    assert 0 == Yatzy(1, 2, 3, 4, 5).three_of_a_kind()
 
 
 def test_four_of_a_knd():
-    assert 12 == Yatzy.four_of_a_kind(3, 3, 3, 3, 5)
-    assert 20 == Yatzy.four_of_a_kind(5, 5, 5, 4, 5)
-    assert 12 == Yatzy.four_of_a_kind(3, 3, 3, 3, 3)
-    assert 0 == Yatzy.four_of_a_kind(3, 3, 3, 2, 1)
+    assert 12 == Yatzy(3, 3, 3, 3, 5).four_of_a_kind()
+    assert 20 == Yatzy(5, 5, 5, 4, 5).four_of_a_kind()
+    assert 12 == Yatzy(3, 3, 3, 3, 3).four_of_a_kind()
+    assert 0 == Yatzy(3, 3, 3, 2, 1).four_of_a_kind()
 
 
 def test_smallStraight():
-    assert 15 == Yatzy.smallStraight(1, 2, 3, 4, 5)
-    assert 15 == Yatzy.smallStraight(2, 3, 4, 5, 1)
-    assert 0 == Yatzy.smallStraight(1, 2, 2, 4, 5)
+    assert 15 == Yatzy(1, 2, 3, 4, 5).smallStraight()
+    assert 15 == Yatzy(2, 3, 4, 5, 1).smallStraight()
+    assert 0 == Yatzy(1, 2, 2, 4, 5).smallStraight()
 
 
 def test_largeStraight():
-    assert 20 == Yatzy.largeStraight(6, 2, 3, 4, 5)
-    assert 20 == Yatzy.largeStraight(2, 3, 4, 5, 6)
-    assert 0 == Yatzy.largeStraight(1, 2, 2, 4, 5)
+    assert 20 == Yatzy(6, 2, 3, 4, 5).largeStraight()
+    assert 20 == Yatzy(2, 3, 4, 5, 6).largeStraight()
+    assert 0 == Yatzy(1, 2, 2, 4, 5).largeStraight()
 
 
 def test_fullHouse():
-    assert 18 == Yatzy.fullHouse(6, 2, 2, 2, 6)
-    assert 0 == Yatzy.fullHouse(2, 3, 4, 5, 6)
+    assert 18 == Yatzy(6, 2, 2, 2, 6).fullHouse()
+    assert 0 == Yatzy(2, 3, 4, 5, 6).fullHouse()
